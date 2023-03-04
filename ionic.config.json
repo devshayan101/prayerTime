@@ -1,0 +1,7 @@
+{
+  "name": "prayerTime",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
