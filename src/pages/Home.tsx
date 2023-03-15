@@ -1,4 +1,5 @@
-import { IonButton,IonContent, IonFooter, IonHeader, IonPage, IonTitle, IonToolbar, IonList, IonItem, IonLabel, IonCol, IonGrid, IonRow } from '@ionic/react';
+import { IonButton,IonContent, IonFooter, IonHeader, IonPage, IonTitle, IonToolbar, 
+          IonList, IonItem, IonLabel, IonCol, IonGrid, IonRow, IonCard } from '@ionic/react';
 import React, { useState, useEffect } from 'react';
 import './Home.css';
 import logo from '../assets/icon/logo.png';
@@ -45,41 +46,39 @@ const Home: React.FC =  () => {
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-        <IonTitle >
-          {/* <h4>Nemaz Time</h4>
-          <img src={logo} alt="Logo" style={{ width: '80px', height: 'auto', marginLeft: '10px' }}/> */}
-
-          <IonGrid>
-            <IonRow>
-              <IonCol size='9' className="align-left"><h4>Nemaz Time</h4></IonCol>
-              <IonCol size='3' className="align-right"><img src={logo} alt="Logo" style={{ width: '80px', height: 'auto' }}/></IonCol>              
-            </IonRow>
-          </IonGrid>
-        </IonTitle>
-        </IonToolbar>
-      </IonHeader>
       <IonContent >
+     
+      {/* <IonCard className="designImplementation">   
+          <IonGrid className='rowSize'>
+            {Object.keys(prayerTimings).map((key) => (
+              <IonRow className='designImplementation-row' key={key}>
+                <IonCol size='6' className="align-left">{key}</IonCol>         
+                <IonCol size='6' className="align-right">{prayerTimings[key as keyof PrayerTimings]}</IonCol>
+              </IonRow>
+              ))}
+          </IonGrid>
+      </IonCard> */}
 
-      
-      {/* <IonList>
+      <IonCard className="designImplementation">   
+        <IonGrid className="rowSize">
           {Object.keys(prayerTimings).map((key) => (
-            <IonItem key={key}>
-              <IonLabel style={{ marginLeft: '10px', paddingLeft:'10px' }}>{key}</IonLabel>
-              <IonLabel style={{ marginLeft: '150px' }}>{prayerTimings[key as keyof PrayerTimings]}</IonLabel>
-            </IonItem>
+            <IonRow className='designImplementation-row' key={key}>
+              <IonCol size='6' className="align-left">{key}</IonCol>         
+              <IonCol size='6' className="align-right">
+                    {
+                      parseInt(prayerTimings[key as keyof PrayerTimings].split(':')[0]) >= 12 
+                      ? (parseInt(prayerTimings[key as keyof PrayerTimings].split(':')[0]) - 12) ===0 ? '12:'+ prayerTimings[key as keyof PrayerTimings].split(':')[1] + " PM"
+                       : (parseInt(prayerTimings[key as keyof PrayerTimings].split(':')[0]) - 12) + ':'
+                      + prayerTimings[key as keyof PrayerTimings].split(':')[1] + " PM" 
+                      : prayerTimings[key as keyof PrayerTimings] + " AM"
+                    }
+              </IonCol>
+            </IonRow>
           ))}
-      </IonList> */}
-    
-      <IonGrid>
-        {Object.keys(prayerTimings).map((key) => (
-          <IonRow  key={key}>
-            <IonCol size='6' className="align-left">{key}</IonCol>         
-            <IonCol size='6' className="align-right">{prayerTimings[key as keyof PrayerTimings]}</IonCol>
-          </IonRow>
-          ))}
-      </IonGrid>
+        </IonGrid>
+      </IonCard>
+
+
 
       </IonContent>
 

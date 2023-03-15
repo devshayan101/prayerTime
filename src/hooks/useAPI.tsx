@@ -31,8 +31,8 @@ const getNemazTimes = async () =>{
           } else {
             setError('An unknown error occurred.');
           }
-        alert(error);
         console.log(error);
+        return error
     }
 
 }
