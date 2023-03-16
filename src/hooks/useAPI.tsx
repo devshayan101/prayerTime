@@ -20,7 +20,7 @@ const getNemazTimes = async () =>{
         const data = await result.json();
         console.log(data);
 
-        return data.data.timings
+        return data.data
     }
     catch(e){
         console.log(e);
