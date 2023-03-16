@@ -1,0 +1,15 @@
+.footer-container {
+    background-image: url("../../../public/assets/img/MID BG.jpg");
+    background-repeat: no-repeat;
+    background-position: center ;
+    background-size: cover; /* or contain */
+
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+
+    height: 4rem;
+}
+  

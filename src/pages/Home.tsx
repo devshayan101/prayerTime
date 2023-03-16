@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import './Home.css';
 import useApi from '../hooks/useAPI';
 import HeaderSection from '../components/Head/HeaderSection';
+import Footer from '../components/Footer/Footer';
 
 
 interface PrayerTimings {
@@ -15,7 +16,9 @@ interface PrayerTimings {
   Maghrib: string;
   Isha: string;
   Imsak: string;
-  Midnight: string;
+  AwwalPaher: string;
+  NisfShab: string;
+  AkhiriPaher: string;
 }
 
 const Home: React.FC =  () => {
@@ -31,26 +34,15 @@ const Home: React.FC =  () => {
     Maghrib: '',
     Isha: '',
     Imsak: '',
-    Midnight: '',
+    AwwalPaher: '',
+    NisfShab:'',
+    AkhiriPaher:'',
   });
   const [hijriDate, setHijriDate] = useState([]);
   const [hijriDayEn, setHijriDayEn] = useState([]);
   const [hijriDayUrdu, setHijriDayUrdu] = useState([]);
   const [hijriMonthEn, setHijriMonthEn] = useState([]);
   const [hijriMonthUrdu, setHijriMonthUrdu] = useState([]);
-
- 
-  // useEffect(() => {
-  //   async function fetchPrayerTimings() {
-
-  //     const data = await getNemazTimes();
-      
-  //     return data;      
-  //   }
-  //   const data = fetchPrayerTimings();
-  //   setPrayerTimings(data.timings); //Nemaz Timings
-
-  // },[]); //[] prevents continious infinite api firing. 
 
   useEffect(() => {
     async function fetchPrayerTimings() {
@@ -74,7 +66,7 @@ const Home: React.FC =  () => {
     fetchPrayerTimings();
   }, []);
 
-  const nemazNamesInUrdu = ['فجر','طلوع آفتاب','ظہر','عصر','غروب آفتاب','مغرب','عشاء','امساک','آدھی رات','',''];
+  const nemazNamesInUrdu = ['فجر','طلوع آفتاب','ظہر','عصر','غروب آفتاب','مغرب','عشاء','امساک','اوّل پہر','نصف شب','آخری پہر'];
   let i=0;
   console.log('Hijri-Data:',hijriDate)
   return (
@@ -91,9 +83,50 @@ const Home: React.FC =  () => {
 
 
 
-      <IonCard className="designImplementation">   
+      
+
+
+      <IonCard className="designImplementation">
+
+
+
+      <div className="container1">
+         <div className="marquee marqueeUrdu">
+                    ہمارا مقصد
+          خالق کی عبادت اور مخلوق کی خدمت کرنا ہے
+          </div>
+        
+        <div className="marquee marqueeEnglish">
+          Hamara maqsad: Khaliq ki Ibadat Makhlook ki Khidmat. 
+        </div>
+        
+      </div>
+
+
         <IonGrid className="rowSize">
           
+          <div className="specialRow">
+
+            <IonRow className='designImplementation-specialRow-SehriEnd'>
+
+                <IonCol size='4' className="align-left"><p>Sehri End</p></IonCol>
+
+                <IonCol size='4' className="align-center"><p>{prayerTimings.Imsak} AM</p></IonCol>
+
+                <IonCol size='4' className="align-right"><p>سحری ختم</p></IonCol>
+            </IonRow>
+
+            <IonRow className='designImplementation-specialRow-IftarTime'>
+
+                <IonCol size='4' className="align-left"><p>Iftar Time</p></IonCol>
+
+                <IonCol size='4' className="align-center"><p>{prayerTimings.Maghrib} AM</p></IonCol>
+
+                <IonCol size='4' className="align-right"><p>افطار</p></IonCol>
+            </IonRow>
+
+          </div>
+
           {Object.keys(prayerTimings).map((key) => (
 
             <IonRow className='designImplementation-row' key={key}>
@@ -107,29 +140,22 @@ const Home: React.FC =  () => {
                       : prayerTimings[key as keyof PrayerTimings] + " AM"
                     }
               </IonCol>
-              <IonCol size='4' className="align-left">{nemazNamesInUrdu[i++]}</IonCol>
+              <IonCol size='4' className="align-right">{nemazNamesInUrdu[i++]}</IonCol>
             </IonRow>
           ))}
-          
+
+          <IonRow className='invisible' >
+              <IonCol style={{height:"3.5rem"}}></IonCol> 
+          </IonRow>    
+
         </IonGrid>
       </IonCard>
 
 
 
       </IonContent>
-
-      <IonFooter>
-        <div className="footerDesign">
-          <IonToolbar>
-            <center>
-              <p style={{margin:"10px"}}>
-                Donate here:
-              </p>
-              <a href="https://rzp.io/l/hmBe4L5"><IonButton size="small">Donate</IonButton></a>            
-            </center>
-          </IonToolbar>
-        </div>
-      </IonFooter>
+      
+      <Footer/>
     </IonPage>
   );
 };

@@ -16,9 +16,12 @@ const getNemazTimes = async () =>{
 
     try{
         const result = await fetch(`${url}/${new Date()}?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}&school=${school}`);
+        console.log(result);
+
 
         const data = await result.json();
-        console.log(data);
+        
+        console.log("fetchData:",data);
 
         return data.data
     }
