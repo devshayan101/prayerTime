@@ -1,10 +1,11 @@
-import { IonButton,IonContent, IonFooter, IonHeader, IonPage, IonTitle, IonToolbar, 
-          IonList, IonItem, IonLabel, IonCol, IonGrid, IonRow, IonCard, IonImg } from '@ionic/react';
+import {IonContent, IonPage,  
+           IonCol, IonGrid, IonRow, IonCard } from '@ionic/react';
 import React, { useState, useEffect } from 'react';
 import './Home.css';
 import useApi from '../hooks/useAPI';
-import HeaderSection from '../components/Head/HeaderSection';
 import Footer from '../components/Footer/Footer';
+import { App } from '@capacitor/app';
+
 
 
 interface PrayerTimings {
@@ -22,7 +23,7 @@ interface PrayerTimings {
 }
 
 const Home: React.FC =  () => {
-
+  
   const {getNemazTimes} = useApi()
 
   const [prayerTimings, setPrayerTimings] = useState<PrayerTimings>({
@@ -65,6 +66,11 @@ const Home: React.FC =  () => {
 
       } catch (error) {
         console.error(error);
+
+        // App.reloadApp();
+        App.exitApp();
+        window.location.reload();
+        //Hard-Reload the app 
       }
     }
     fetchPrayerTimings();

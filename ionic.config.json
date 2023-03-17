@@ -3,5 +3,9 @@
   "integrations": {
     "capacitor": {}
   },
-  "type": "react"
+  "type": "react",
+  "proxies": [{
+    "path": "/",
+    "proxyUrl": "http://api.aladhan.com"
+}]
 }
