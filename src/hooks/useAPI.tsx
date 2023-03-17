@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import { Geolocation } from '@capacitor/geolocation';
-
+import axios from "axios";
 
 const useApi = () =>{
 const url = 'http://api.aladhan.com/v1/timings';
@@ -15,15 +15,21 @@ const getNemazTimes = async () =>{
     console.log(position);
 
     try{
-        const result = await fetch(`${url}/${new Date()}?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}&school=${school}`);
-        console.log(result);
+        const data = await axios.get(`${url}/${new Date()}?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}&school=${school}`,{
+            headers: {
+                'Content-Type': 'application/json',
+              }
+            // mode: "no-cors", // no-cors, *cors, same-origin
+            
+        });
+        // console.log("fetchResult:",result);
 
 
-        const data = await result.json();
+        // const data = await result.json();
         
-        console.log("fetchData:",data);
+        console.log("axiosData:",data.data);
 
-        return data.data
+        return data.data.data
     }
     catch(e){
         console.log(e);

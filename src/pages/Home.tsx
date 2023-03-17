@@ -44,11 +44,15 @@ const Home: React.FC =  () => {
   const [hijriMonthEn, setHijriMonthEn] = useState([]);
   const [hijriMonthUrdu, setHijriMonthUrdu] = useState([]);
 
+
   useEffect(() => {
     async function fetchPrayerTimings() {
       try {
         const data = await getNemazTimes();
 
+        if(data==null){
+          throw Error(`Fetch Failed`)
+        }
         setPrayerTimings(data.timings);
 
         setHijriDate(data.date.hijri.date);
@@ -71,7 +75,7 @@ const Home: React.FC =  () => {
   console.log('Hijri-Data:',hijriDate)
   return (
     <IonPage >
-      <IonContent >
+      <IonContent>
         
       <div className="headImage">  
         <center>
@@ -90,7 +94,7 @@ const Home: React.FC =  () => {
 
 
 
-      <div className="container1">
+      <div className="container-marquee">
          <div className="marquee marqueeUrdu">
                     ہمارا مقصد
           خالق کی عبادت اور مخلوق کی خدمت کرنا ہے
@@ -151,11 +155,9 @@ const Home: React.FC =  () => {
         </IonGrid>
       </IonCard>
 
-
-
       </IonContent>
-      
       <Footer/>
+      
     </IonPage>
   );
 };
