@@ -1,5 +1,5 @@
-import {IonContent, IonPage,  
-           IonCol, IonGrid, IonRow, IonCard } from '@ionic/react';
+import {IonContent, IonPage,
+           IonCol, IonGrid, IonRow, IonCard, IonImg } from '@ionic/react';
 import React, { useState, useEffect } from 'react';
 import './Home.css';
 import useApi from '../hooks/useAPI';
@@ -23,7 +23,7 @@ interface PrayerTimings {
 }
 
 const Home: React.FC =  () => {
-  
+
   const {getNemazTimes} = useApi()
 
   const [prayerTimings, setPrayerTimings] = useState<PrayerTimings>({
@@ -39,12 +39,14 @@ const Home: React.FC =  () => {
     NisfShab:'',
     AkhiriPaher:'',
   });
+  const [engDate, setEngDate] = useState();
   const [hijriDate, setHijriDate] = useState([]);
   const [hijriDayEn, setHijriDayEn] = useState([]);
   const [hijriDayUrdu, setHijriDayUrdu] = useState([]);
   const [hijriMonthEn, setHijriMonthEn] = useState([]);
   const [hijriMonthUrdu, setHijriMonthUrdu] = useState([]);
-
+  const [hijriYear, setHijriYear] = useState([]);
+  const [hijriDayNumber, setHijriDayNumber] = useState([]);
 
   useEffect(() => {
     async function fetchPrayerTimings() {
@@ -55,22 +57,21 @@ const Home: React.FC =  () => {
           throw Error(`Fetch Failed`)
         }
         setPrayerTimings(data.timings);
-
+        setEngDate(data.date.readable);
+        setHijriDayNumber(data.date.hijri.day)
         setHijriDate(data.date.hijri.date);
-        
+        setHijriYear(data.date.hijri.year);
         setHijriDayEn(data.date.hijri.weekday.en);
         setHijriDayUrdu(data.date.hijri.weekday.ar);
-
+        
         setHijriMonthEn(data.date.hijri.month.en);
         setHijriMonthUrdu(data.date.hijri.month.ar);
 
       } catch (error) {
         console.error(error);
-
-        // App.reloadApp();
-        App.exitApp();
-        window.location.reload();
-        //Hard-Reload the app 
+        //App.exitApp();
+        // window.location.reload();
+        //Hard-Reload the app
       }
     }
     fetchPrayerTimings();
@@ -82,18 +83,24 @@ const Home: React.FC =  () => {
   return (
     <IonPage >
       <IonContent>
-        
-      <div className="headImage">  
+
+      {/* <IonRefresher slot="fixed" onIonRefresh={handleRefresh}>
+          <IonRefresherContent></IonRefresherContent>
+      </IonRefresher> */}
+
+
+      <div className="headImage">
         <center>
-          <h5>{hijriDate}</h5>
+          <h5>{engDate}</h5>
+          {/* <h5>{hijriDate}</h5> */}
+          <h5>{hijriDayNumber}-{hijriMonthUrdu}/{hijriMonthEn}-{hijriYear}</h5>
           <h5>{hijriDayEn}/{hijriDayUrdu}</h5>
-          <h5>{hijriMonthEn}/{hijriMonthUrdu}</h5>
         </center>
       </div>
 
 
 
-      
+
 
 
       <IonCard className="designImplementation">
@@ -105,16 +112,16 @@ const Home: React.FC =  () => {
                     ہمارا مقصد
           خالق کی عبادت اور مخلوق کی خدمت کرنا ہے
           </div>
-        
+
         <div className="marquee marqueeEnglish">
-          Hamara maqsad: Khaliq ki Ibadat Makhlook ki Khidmat. 
+          Hamara maqsad: Khaliq ki Ibadat Makhlook ki Khidmat.
         </div>
-        
+
       </div>
 
 
         <IonGrid className="rowSize">
-          
+
           <div className="specialRow">
 
             <IonRow className='designImplementation-specialRow-SehriEnd'>
@@ -140,13 +147,13 @@ const Home: React.FC =  () => {
           {Object.keys(prayerTimings).map((key) => (
 
             <IonRow className='designImplementation-row' key={key}>
-              <IonCol size='4' className="align-left">{key}</IonCol>         
+              <IonCol size='4' className="align-left">{key}</IonCol>
               <IonCol size='4' className="align-center">
                     {
-                      parseInt(prayerTimings[key as keyof PrayerTimings].split(':')[0]) >= 12 
+                      parseInt(prayerTimings[key as keyof PrayerTimings].split(':')[0]) >= 12
                       ? (parseInt(prayerTimings[key as keyof PrayerTimings].split(':')[0]) - 12) ===0 ? '12:'+ prayerTimings[key as keyof PrayerTimings].split(':')[1] + " PM"
                        : (parseInt(prayerTimings[key as keyof PrayerTimings].split(':')[0]) - 12) + ':'
-                      + prayerTimings[key as keyof PrayerTimings].split(':')[1] + " PM" 
+                      + prayerTimings[key as keyof PrayerTimings].split(':')[1] + " PM"
                       : prayerTimings[key as keyof PrayerTimings] + " AM"
                     }
               </IonCol>
@@ -154,16 +161,20 @@ const Home: React.FC =  () => {
             </IonRow>
           ))}
 
-          <IonRow className='invisible' >
-              <IonCol style={{height:"3.5rem"}}></IonCol> 
-          </IonRow>    
 
         </IonGrid>
+
+        <IonImg src="../assets/img/donationDetails.jpg" alt=""></IonImg>
+        
+        <IonRow className='invisible' >
+              <IonCol style={{height:"3.5rem"}}></IonCol>
+        </IonRow>
+
       </IonCard>
 
       </IonContent>
       <Footer/>
-      
+
     </IonPage>
   );
 };
