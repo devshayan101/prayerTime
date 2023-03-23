@@ -108,8 +108,6 @@ const getNemazTimes = async () =>{
     }
 
 }
-
-
 return {
     getNemazTimes
     }

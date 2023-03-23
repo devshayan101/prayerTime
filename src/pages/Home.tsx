@@ -4,7 +4,9 @@ import React, { useState, useEffect } from 'react';
 import './Home.css';
 import useApi from '../hooks/useAPI';
 import Footer from '../components/Footer/Footer';
-import { App } from '@capacitor/app';
+// import { SplashScreen } from '@capacitor/splash-screen';
+
+// import { App } from '@capacitor/app';
 
 
 
@@ -23,7 +25,8 @@ interface PrayerTimings {
 }
 
 const Home: React.FC =  () => {
-
+// Hide the splash (you should do this on app launch)
+  // await SplashScreen.hide();
   const {getNemazTimes} = useApi()
 
   const [prayerTimings, setPrayerTimings] = useState<PrayerTimings>({
